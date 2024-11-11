@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DevTools } from "../components/DevTools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Create a client
 const queryClient = new QueryClient();
