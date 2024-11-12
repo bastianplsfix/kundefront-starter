@@ -26,6 +26,8 @@ function RouteComponent() {
       >
         Error Boundary Example
       </Link>
+      <br />
+      <Link to="/misc/blocking">Blocker</Link>
     </div>
   );
 }
