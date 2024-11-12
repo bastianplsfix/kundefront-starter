@@ -1,5 +1,5 @@
 // src/mocks/fakeDb.ts
-import { User } from "../types";
+import { User } from "src/types";
 
 export const fakeDb: User[] = [
   { id: 1, username: "Sebastian" },
