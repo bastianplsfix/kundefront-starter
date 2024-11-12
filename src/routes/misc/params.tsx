@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { fetchUserCustomError } from "../../api";
+import { fetchUser } from "../../api";
 
 type ItemFilters = {
   query: string;
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/misc/params")({
     };
   },
   loaderDeps: ({ search: { query } }) => ({ query }),
-  loader: ({ deps: { query } }) => fetchUserCustomError(query),
+  loader: ({ deps: { query } }) => fetchUser(query),
 });
 
 function RouteComponent() {

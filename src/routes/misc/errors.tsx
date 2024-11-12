@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { fetchUser } from "../../api";
+import { fetchUserCustomError } from "../../api";
 import { MyCustomError } from "../../api";
 
 type ErrorComponentProps = {
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/misc/errors")({
     };
   },
   loaderDeps: ({ search: { query } }) => ({ query }),
-  loader: ({ deps: { query } }) => fetchUser(query),
+  loader: ({ deps: { query } }) => fetchUserCustomError(query),
   errorComponent: ({ error }) => {
     if (error instanceof MyCustomError) {
       return <div>{error.message}</div>;
