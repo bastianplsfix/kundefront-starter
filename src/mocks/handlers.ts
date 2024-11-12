@@ -3,7 +3,7 @@ import { http, HttpResponse } from "msw";
 import { fakeDb } from "./fakeDb";
 
 export const handlers = [
-  http.get("/api/user/:id", ({ request, params }) => {
+  http.get("/api/user/:id", ({ params }) => {
     const { id } = params;
 
     // Find the user by ID

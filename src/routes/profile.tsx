@@ -7,15 +7,17 @@ export const Route = createFileRoute("/profile")({
 });
 
 function RouteComponent() {
+  const [userId, setUserId] = React.useState(1);
+
   const {
     data: user,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["profile", userId],
     queryFn: async () => {
-      const response = await fetch("/api/user/1");
+      const response = await fetch(`/api/user/${userId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -26,5 +28,14 @@ function RouteComponent() {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;
 
-  return <div>Hello {user.username}!</div>;
+  return (
+    <div>
+      <div>
+        <button onClick={() => setUserId(1)}>User 1</button>
+        <button onClick={() => setUserId(2)}>User 2</button>
+        <button onClick={() => setUserId(3)}>User 3</button>
+      </div>
+      <div>Hello {user.username}!</div>
+    </div>
+  );
 }
