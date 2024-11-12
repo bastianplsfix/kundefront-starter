@@ -1,14 +1,24 @@
-// src/mocks/handlers.ts
-import { http } from "msw";
+// src/mocks/handlers.js
+import { http, HttpResponse } from "msw";
+import { fakeDb } from "./fakeDb";
 
 export const handlers = [
-  http.get("/posts", () => {
-    console.log('Captured a "GET /posts" request');
+  http.get("/api/user/:id", ({ request, params }) => {
+    const { id } = params;
+
+    // Find the user by ID
+    const user = fakeDb.find((user) => user.id === Number(id));
+
+    if (user) {
+      return HttpResponse.json(user);
+    } else {
+      return HttpResponse.json(
+        { error: "User not found" },
+        {
+          status: 404,
+        },
+      );
+    }
   }),
-  http.post("/posts", () => {
-    console.log('Captured a "POST /posts" request');
-  }),
-  http.delete("/posts/:id", ({ params }) => {
-    console.log(`Captured a "DELETE /posts/${params.id}" request`);
-  }),
+  // Add more handlers for other API endpoints here
 ];
