@@ -1,7 +1,7 @@
 // src/mocks/handlers/userHandlers.ts
 import { http, HttpResponse } from "msw";
 import { fakeDb } from "../fakeDb";
-import { User } from "../types";
+import { User } from "../../types";
 
 // Utility to find a user by ID
 const findUserById = (id: string): User | undefined =>

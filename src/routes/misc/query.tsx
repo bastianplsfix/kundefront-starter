@@ -1,14 +1,14 @@
-import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import * as React from 'react'
+import { createFileRoute } from '@tanstack/react-router'
+import { useQuery } from '@tanstack/react-query'
 
-export const Route = createFileRoute("/profile")({
+export const Route = createFileRoute('/misc/query')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const [inputValue, setInputValue] = React.useState<string>("");
-  const [userId, setUserId] = React.useState<number | null>(null);
+  const [inputValue, setInputValue] = React.useState<string>('')
+  const [userId, setUserId] = React.useState<number | null>(null)
 
   const {
     data: user,
@@ -16,23 +16,23 @@ function RouteComponent() {
     isError,
     error,
   } = useQuery({
-    queryKey: ["profile", userId],
+    queryKey: ['profile', userId],
     queryFn: async () => {
-      const response = await fetch(`/api/user/${userId}`);
+      const response = await fetch(`/api/user/${userId}`)
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok')
       }
-      return response.json();
+      return response.json()
     },
     enabled: !!userId, // Only fetch when a userId is set
-  });
+  })
 
   const handleSearch = () => {
-    const parsedUserId = parseInt(inputValue, 10);
+    const parsedUserId = parseInt(inputValue, 10)
     if (!isNaN(parsedUserId)) {
-      setUserId(parsedUserId);
+      setUserId(parsedUserId)
     }
-  };
+  }
 
   return (
     <div>
@@ -53,5 +53,5 @@ function RouteComponent() {
         </div>
       )}
     </div>
-  );
+  )
 }
