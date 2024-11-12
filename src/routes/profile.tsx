@@ -7,7 +7,8 @@ export const Route = createFileRoute("/profile")({
 });
 
 function RouteComponent() {
-  const [userId, setUserId] = React.useState(1);
+  const [inputValue, setInputValue] = React.useState<string>("");
+  const [userId, setUserId] = React.useState<number | null>(null);
 
   const {
     data: user,
@@ -23,19 +24,34 @@ function RouteComponent() {
       }
       return response.json();
     },
+    enabled: !!userId, // Only fetch when a userId is set
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
+  const handleSearch = () => {
+    const parsedUserId = parseInt(inputValue, 10);
+    if (!isNaN(parsedUserId)) {
+      setUserId(parsedUserId);
+    }
+  };
 
   return (
     <div>
       <div>
-        <button onClick={() => setUserId(1)}>User 1</button>
-        <button onClick={() => setUserId(2)}>User 2</button>
-        <button onClick={() => setUserId(3)}>User 3</button>
+        <input
+          type="number"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Fetch user by id"
+        />
+        <button onClick={handleSearch}>Search</button>
       </div>
-      <div>Hello {user.username}!</div>
+      {isLoading && <div>Loading...</div>}
+      {isError && <div>Error: {error.message}</div>}
+      {user && (
+        <div>
+          <pre>{JSON.stringify(user)}</pre>
+        </div>
+      )}
     </div>
   );
 }
