@@ -18,6 +18,7 @@ import { Route as MiscIndexImport } from './routes/misc/index'
 import { Route as UserIdImport } from './routes/user/$id'
 import { Route as MiscQueryImport } from './routes/misc/query'
 import { Route as MiscParamsImport } from './routes/misc/params'
+import { Route as MiscErrorsImport } from './routes/misc/errors'
 
 // Create/Update Routes
 
@@ -63,6 +64,12 @@ const MiscParamsRoute = MiscParamsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const MiscErrorsRoute = MiscErrorsImport.update({
+  id: '/misc/errors',
+  path: '/misc/errors',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -79,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/misc/errors': {
+      id: '/misc/errors'
+      path: '/misc/errors'
+      fullPath: '/misc/errors'
+      preLoaderRoute: typeof MiscErrorsImport
       parentRoute: typeof rootRoute
     }
     '/misc/params': {
@@ -124,6 +138,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/misc/errors': typeof MiscErrorsRoute
   '/misc/params': typeof MiscParamsRoute
   '/misc/query': typeof MiscQueryRoute
   '/user/$id': typeof UserIdRoute
@@ -134,6 +149,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/misc/errors': typeof MiscErrorsRoute
   '/misc/params': typeof MiscParamsRoute
   '/misc/query': typeof MiscQueryRoute
   '/user/$id': typeof UserIdRoute
@@ -145,6 +161,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/misc/errors': typeof MiscErrorsRoute
   '/misc/params': typeof MiscParamsRoute
   '/misc/query': typeof MiscQueryRoute
   '/user/$id': typeof UserIdRoute
@@ -157,6 +174,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/misc/errors'
     | '/misc/params'
     | '/misc/query'
     | '/user/$id'
@@ -166,6 +184,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/misc/errors'
     | '/misc/params'
     | '/misc/query'
     | '/user/$id'
@@ -175,6 +194,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/misc/errors'
     | '/misc/params'
     | '/misc/query'
     | '/user/$id'
@@ -186,6 +206,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  MiscErrorsRoute: typeof MiscErrorsRoute
   MiscParamsRoute: typeof MiscParamsRoute
   MiscQueryRoute: typeof MiscQueryRoute
   UserIdRoute: typeof UserIdRoute
@@ -196,6 +217,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  MiscErrorsRoute: MiscErrorsRoute,
   MiscParamsRoute: MiscParamsRoute,
   MiscQueryRoute: MiscQueryRoute,
   UserIdRoute: UserIdRoute,
@@ -215,6 +237,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/misc/errors",
         "/misc/params",
         "/misc/query",
         "/user/$id",
@@ -227,6 +250,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/misc/errors": {
+      "filePath": "misc/errors.tsx"
     },
     "/misc/params": {
       "filePath": "misc/params.tsx"

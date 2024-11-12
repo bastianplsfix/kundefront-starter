@@ -12,10 +12,19 @@ function RouteComponent() {
       <Link
         to="/misc/params"
         search={{
-          query: "",
+          query: "1",
         }}
       >
-        Search params
+        Find user with Search Params
+      </Link>
+      <br />
+      <Link
+        to="/misc/errors"
+        search={{
+          query: "1",
+        }}
+      >
+        Error Boundary Example
       </Link>
     </div>
   );
