@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as HomeImport } from './routes/home'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as UserIndexImport } from './routes/user/index'
@@ -22,6 +23,12 @@ import { Route as MiscErrorsImport } from './routes/misc/errors'
 import { Route as MiscBlockingImport } from './routes/misc/blocking'
 
 // Create/Update Routes
+
+const HomeRoute = HomeImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -95,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeImport
+      parentRoute: typeof rootRoute
+    }
     '/misc/blocking': {
       id: '/misc/blocking'
       path: '/misc/blocking'
@@ -152,6 +166,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/home': typeof HomeRoute
   '/misc/blocking': typeof MiscBlockingRoute
   '/misc/errors': typeof MiscErrorsRoute
   '/misc/params': typeof MiscParamsRoute
@@ -164,6 +179,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/home': typeof HomeRoute
   '/misc/blocking': typeof MiscBlockingRoute
   '/misc/errors': typeof MiscErrorsRoute
   '/misc/params': typeof MiscParamsRoute
@@ -177,6 +193,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/home': typeof HomeRoute
   '/misc/blocking': typeof MiscBlockingRoute
   '/misc/errors': typeof MiscErrorsRoute
   '/misc/params': typeof MiscParamsRoute
@@ -191,6 +208,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/home'
     | '/misc/blocking'
     | '/misc/errors'
     | '/misc/params'
@@ -202,6 +220,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/home'
     | '/misc/blocking'
     | '/misc/errors'
     | '/misc/params'
@@ -213,6 +232,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/home'
     | '/misc/blocking'
     | '/misc/errors'
     | '/misc/params'
@@ -226,6 +246,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  HomeRoute: typeof HomeRoute
   MiscBlockingRoute: typeof MiscBlockingRoute
   MiscErrorsRoute: typeof MiscErrorsRoute
   MiscParamsRoute: typeof MiscParamsRoute
@@ -238,6 +259,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  HomeRoute: HomeRoute,
   MiscBlockingRoute: MiscBlockingRoute,
   MiscErrorsRoute: MiscErrorsRoute,
   MiscParamsRoute: MiscParamsRoute,
@@ -259,6 +281,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/home",
         "/misc/blocking",
         "/misc/errors",
         "/misc/params",
@@ -273,6 +296,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/home": {
+      "filePath": "home.tsx"
     },
     "/misc/blocking": {
       "filePath": "misc/blocking.tsx"

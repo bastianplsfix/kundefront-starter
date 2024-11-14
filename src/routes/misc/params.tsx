@@ -1,6 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { fetchUser } from "../../api";
+import {createFileRoute, useNavigate} from "@tanstack/react-router";
+import {useState} from "react";
+import {fetchUser} from "../../api";
+import {useForm} from "@tanstack/react-form";
 
 type ItemFilters = {
   query: string;
@@ -13,35 +14,46 @@ export const Route = createFileRoute("/misc/params")({
       query: search.query as string,
     };
   },
-  loaderDeps: ({ search: { query } }) => ({ query }),
-  loader: ({ deps: { query } }) => fetchUser(query),
+  loaderDeps: ({search: {query}}) => ({query}),
+  loader: async ({deps: {query}}) => (query ? await fetchUser(query) : null),
 });
 
 function RouteComponent() {
-  const { query } = Route.useSearch();
-  const [inputValue, setInputValue] = useState(query || "");
-  const navigate = useNavigate({ from: Route.fullPath });
+  const {query} = Route.useSearch();
+
+
+  const form = useForm({
+    defaultValues: {
+      query: query,
+    },
+  });
+
+  const navigate = useNavigate({from: Route.fullPath});
 
   const userData = Route.useLoaderData();
 
   return (
     <div>
       <h1>Search</h1>
-      <input
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+      <form.Field
+        name="query"
+        children={(field) => (
+          <input
+            value={field.state.value}
+            onChange={(e) => {
+              field.handleChange(e.target.value)
+              navigate({
+                search: (prev) => ({...prev, query: field.state.value}),
+              });
+            }}
+          />
+        )}
       />
-      <button
-        onClick={() => {
-          navigate({ search: (prev) => ({ ...prev, query: inputValue }) });
-        }}
-      >
-        Search
-      </button>
-      <pre>{JSON.stringify({ userData }, null, 2)}</pre>
-      <br />
-      <br />
-      <pre>{JSON.stringify({ query }, null, 2)}</pre>
+
+      <pre>{JSON.stringify({userData}, null, 2)}</pre>
+      <br/>
+      <br/>
+      <pre>{JSON.stringify({query}, null, 2)}</pre>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
+import {RouterProvider, createRouter} from "@tanstack/react-router";
+import {routeTree} from "./routeTree.gen";
 
 // Set up a Router instance
 const router = createRouter({
@@ -21,7 +21,7 @@ async function enableMocking() {
     return;
   }
 
-  const { worker } = await import("./mocks/browser");
+  const {worker} = await import("./mocks/browser");
 
   // `worker.start()` returns a Promise that resolves
   // once the Service Worker is up and ready to intercept requests.
@@ -40,6 +40,6 @@ const rootElement = document.getElementById("app")!;
 enableMocking().then(() => {
   if (!rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement);
-    root.render(<RouterProvider router={router} />);
+    root.render(<RouterProvider router={router}/>);
   }
 });

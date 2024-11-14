@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import {Link} from "@tanstack/react-router";
 
 export function Navigation() {
   return (
@@ -9,7 +9,7 @@ export function Navigation() {
           activeProps={{
             className: "font-bold",
           }}
-          activeOptions={{ exact: true }}
+          activeOptions={{exact: true}}
         >
           Home
         </Link>{" "}
@@ -37,8 +37,16 @@ export function Navigation() {
         >
           Misc
         </Link>
+        <Link
+          to="/home"
+          activeProps={{
+            className: "font-bold",
+          }}
+        >
+          Home
+        </Link>
       </div>
-      <hr />
+      <hr/>
     </>
   );
 }
